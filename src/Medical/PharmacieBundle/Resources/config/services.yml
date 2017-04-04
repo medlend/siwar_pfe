@@ -1,0 +1,4 @@
+services:
+#    pharmacie.example:
+#        class: Medical\PharmacieBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

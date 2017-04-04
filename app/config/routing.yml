@@ -1,0 +1,27 @@
+pharmacie:
+    resource: "@PharmacieBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+laboratoire:
+    resource: "@LaboratoireBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+hopitale:
+    resource: "@HopitaleBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+medecin:
+    resource: "@MedecinBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
