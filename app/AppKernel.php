@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Medical\hopitaleBundle\HopitaleBundle(),
             new Medical\LaboratoireBundle\LaboratoireBundle(),
             new Medical\PharmacieBundle\PharmacieBundle(),
+            //new FOS\RestBundle\FOSRestBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

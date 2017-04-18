@@ -24,6 +24,37 @@ class Utilisateur extends BaseUser
      */
     protected $id;
 
+
+
+    /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     * @return Utilisateur
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+
+
+
+
+
+
     public function __construct()
     {
         parent::__construct();

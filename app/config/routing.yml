@@ -1,3 +1,7 @@
+medecin_medecin:
+    resource: "@MedecinBundle/Controller/MedecinController.php"
+    type:     annotation
+
 pharmacie:
     resource: "@PharmacieBundle/Controller/"
     type:     annotation

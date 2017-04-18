@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Medecins list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Description</th>
+                <th>Numtel</th>
+                <th>Fax</th>
+                <th>Houverture</th>
+                <th>Hfermeture</th>
+                <th>Siteweb</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for medecin in medecins %}
+            <tr>
+                <td><a href="{{ path('medecin_show', { 'id': medecin.id }) }}">{{ medecin.id }}</a></td>
+                <td>{{ medecin.description }}</td>
+                <td>{{ medecin.numTel }}</td>
+                <td>{{ medecin.fax }}</td>
+                <td>{{ medecin.hOuverture }}</td>
+                <td>{{ medecin.hFermeture }}</td>
+                <td>{{ medecin.siteWeb }}</td>
+                <td>{{ medecin.latitude }}</td>
+                <td>{{ medecin.longitude }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('medecin_show', { 'id': medecin.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('medecin_edit', { 'id': medecin.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('medecin_new') }}">Create a new medecin</a>
+        </li>
+    </ul>
+{% endblock %}
