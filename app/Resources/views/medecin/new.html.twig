@@ -15,4 +15,36 @@
         </li>
     </ul>
     </div>
+
+
+
 {% endblock %}
+
+    {% block javascripts %}
+        <script src="//code.jquery.com/jquery-2.1.1.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx4U0wGOGkj2jDW6PPIjACGl8O8YqTKhY&libraries=places"></script>
+
+        <script>
+            var options = {
+//                types: ['(regions)'],
+                componentRestrictions: {country: 'tn'}
+            };
+            var input = document.getElementById('medical_medecinbundle_medecin_adresse');
+            autocomplete = new google.maps.places.Autocomplete(input,options);
+
+            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                var place = autocomplete.getPlace();
+                if (place.geometry.viewport) {
+                    geomap.fitBounds(place.geometry.viewport);
+                } else {
+                    geomap.setCenter(place.geometry.location);
+                    geomap.setZoom(17);
+                }
+            });
+
+
+        </script>
+
+
+    {% endblock %}

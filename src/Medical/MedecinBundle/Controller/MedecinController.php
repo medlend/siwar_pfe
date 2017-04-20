@@ -5,7 +5,8 @@ namespace Medical\MedecinBundle\Controller;
 use Medical\MedecinBundle\Entity\Medecin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Medecin controller.
@@ -44,6 +45,12 @@ class MedecinController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' .str_replace(" ", "+", $medecin->getAdresse()). '&key=AIzaSyBx4U0wGOGkj2jDW6PPIjACGl8O8YqTKhY';
+            $data = json_decode($this->curl_get_contents($url))->results[0]->geometry->location;
+
+            $medecin->setLatitude($data->lat)
+                ->setLongitude($data->lng);
             $em = $this->getDoctrine()->getManager();
             $em->persist($medecin);
             $em->flush($medecin);
@@ -130,7 +137,22 @@ class MedecinController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('medecin_delete', array('id' => $medecin->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
+    }
+
+    function curl_get_contents($url)
+    {
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+
+        $data = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $data;
     }
 }

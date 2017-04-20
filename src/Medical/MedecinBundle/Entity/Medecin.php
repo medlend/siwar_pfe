@@ -25,9 +25,14 @@ class Medecin
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=256)
+     * @ORM\Column(type="string", length=4000)
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="string", length=4000)
+     */
+    private $adresse;
 
     /**
      * @ORM\Column(type="string", length=128, name="num_tel")
@@ -89,6 +94,24 @@ class Medecin
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * @param mixed $adresse
+     * @return Medecin
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
         return $this;
     }
 

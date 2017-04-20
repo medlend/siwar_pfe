@@ -24,8 +24,9 @@ class MedecinType extends AbstractType
             ->add('hOuverture')
             ->add('hFermeture')
             ->add('siteWeb')
-            ->add('latitude')
-            ->add('longitude')
+            ->add('adresse')
+           // ->add('latitude')
+            //->add('longitude')
             ->add('specialite')        ;
     }
     
