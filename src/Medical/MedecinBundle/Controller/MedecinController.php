@@ -46,11 +46,15 @@ class MedecinController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' .str_replace(" ", "+", $medecin->getAdresse()). '&key=AIzaSyBx4U0wGOGkj2jDW6PPIjACGl8O8YqTKhY';
-            $data = json_decode($this->curl_get_contents($url))->results[0]->geometry->location;
+//            $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' .str_replace(" ", "+", $medecin->getAdresse()). '&key=AIzaSyBx4U0wGOGkj2jDW6PPIjACGl8O8YqTKhY';
+//            $data = json_decode($this->curl_get_contents($url))->results[0]->geometry->location;
 
-            $medecin->setLatitude($data->lat)
-                ->setLongitude($data->lng);
+//            $medecin->setLatitude($data->lat)
+//                ->setLongitude($data->lng);
+
+            $medecin->setLatitude('')
+                ->setLongitude('');
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($medecin);
             $em->flush($medecin);
