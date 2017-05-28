@@ -2,10 +2,12 @@
 
 namespace Medical\MedecinBundle\Controller;
 
+use Medical\MedecinBundle\Entity\CalendarEvent;
 use Medical\MedecinBundle\Entity\Medecin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,6 +33,27 @@ class MedecinController extends Controller
             'medecins' => $medecins,
         ));
     }
+
+
+
+    /**
+     * Lists all medecin entities.
+     *
+     * @Route("/calendar", name="medecin_calendar")
+     * @Method("GET")
+     */
+    public function calendarAction()
+    {
+//        $dispatcher = new EventDispatcher();
+//        $event = new \AncaRebeca\FullCalendarBundle\Event\CalendarEvent( new \DateTime(),new \DateTime(),[]);
+//        $dispatcher->dispatch('fullcalendar.set_data', $event);
+//
+//        dump(new \DateTime());
+//die('aa');
+
+        return $this->render('calendar/index.html.twig');
+    }
+
 
     /**
      * Creates a new medecin entity.
