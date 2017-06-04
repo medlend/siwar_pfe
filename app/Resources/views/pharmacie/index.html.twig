@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Pharmacies list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nompharmacie</th>
+                <th>Mailpharmacie</th>
+                <th>Telpharmacie</th>
+                <th>Faxpharmacie</th>
+                <th>Houverture</th>
+                <th>Hfermeture</th>
+                <th>Siteweb</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pharmacie in pharmacies %}
+            <tr>
+                <td><a href="{{ path('pharmacie_show', { 'id': pharmacie.id }) }}">{{ pharmacie.id }}</a></td>
+                <td>{{ pharmacie.nomPharmacie }}</td>
+                <td>{{ pharmacie.mailPharmacie }}</td>
+                <td>{{ pharmacie.telPharmacie }}</td>
+                <td>{{ pharmacie.faxPharmacie }}</td>
+                <td>{{ pharmacie.hOuverture }}</td>
+                <td>{{ pharmacie.hFermeture }}</td>
+                <td>{{ pharmacie.siteWeb }}</td>
+                <td>{{ pharmacie.latitude }}</td>
+                <td>{{ pharmacie.longitude }}</td>
+                <td>{{ pharmacie.type }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('pharmacie_show', { 'id': pharmacie.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('pharmacie_edit', { 'id': pharmacie.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('pharmacie_new') }}">Create a new pharmacie</a>
+        </li>
+    </ul>
+{% endblock %}

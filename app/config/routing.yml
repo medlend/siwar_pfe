@@ -1,3 +1,15 @@
+hopitale_hopitale:
+    resource: "@HopitaleBundle/Controller/HopitaleController.php"
+    type:     annotation
+
+pharmacie_pharmacie:
+    resource: "@PharmacieBundle/Controller/PharmacieController.php"
+    type:     annotation
+
+laboratoire_laboratoire:
+    resource: "@LaboratoireBundle/Controller/LaboratoireController.php"
+    type:     annotation
+
 medecin_medecin:
     resource: "@MedecinBundle/Controller/MedecinController.php"
     type:     annotation

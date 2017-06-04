@@ -1,6 +1,6 @@
 <?php
 
-namespace Medical\hopitaleBundle;
+namespace Medical\HopitaleBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
