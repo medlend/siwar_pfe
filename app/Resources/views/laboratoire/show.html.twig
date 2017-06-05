@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Laboratoire</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ laboratoire.id }}</td>
+            </tr>
+            <tr>
+                <th>Nomlab</th>
+                <td>{{ laboratoire.nomLab }}</td>
+            </tr>
+            <tr>
+                <th>Maillab</th>
+                <td>{{ laboratoire.mailLab }}</td>
+            </tr>
+            <tr>
+                <th>Tellab</th>
+                <td>{{ laboratoire.telLab }}</td>
+            </tr>
+            <tr>
+                <th>Faxlab</th>
+                <td>{{ laboratoire.faxLab }}</td>
+            </tr>
+            <tr>
+                <th>Houverture</th>
+                <td>{{ laboratoire.hOuverture }}</td>
+            </tr>
+            <tr>
+                <th>Hfermeture</th>
+                <td>{{ laboratoire.hFermeture }}</td>
+            </tr>
+            <tr>
+                <th>Siteweb</th>
+                <td>{{ laboratoire.siteWeb }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+                <td>{{ laboratoire.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Longitude</th>
+                <td>{{ laboratoire.longitude }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('laboratoire_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('laboratoire_edit', { 'id': laboratoire.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Hopitale</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ hopitale.id }}</td>
+            </tr>
+            <tr>
+                <th>Nomhopitale</th>
+                <td>{{ hopitale.nomHopitale }}</td>
+            </tr>
+            <tr>
+                <th>Mailhopitale</th>
+                <td>{{ hopitale.mailHopitale }}</td>
+            </tr>
+            <tr>
+                <th>Telhopitale</th>
+                <td>{{ hopitale.telHopitale }}</td>
+            </tr>
+            <tr>
+                <th>Faxhopitale</th>
+                <td>{{ hopitale.faxHopitale }}</td>
+            </tr>
+            <tr>
+                <th>Houverture</th>
+                <td>{{ hopitale.hOuverture }}</td>
+            </tr>
+            <tr>
+                <th>Hfermeture</th>
+                <td>{{ hopitale.hFermeture }}</td>
+            </tr>
+            <tr>
+                <th>Siteweb</th>
+                <td>{{ hopitale.siteWeb }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+                <td>{{ hopitale.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Longitude</th>
+                <td>{{ hopitale.longitude }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('hopitale_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('hopitale_edit', { 'id': hopitale.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

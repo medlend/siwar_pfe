@@ -19,13 +19,13 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new User\UserBundle\UserBundle(),
             new Medical\MedecinBundle\MedecinBundle(),
-            new Medical\hopitaleBundle\HopitaleBundle(),
             new Medical\LaboratoireBundle\LaboratoireBundle(),
             new Medical\PharmacieBundle\PharmacieBundle(),
             new ADesigns\CalendarBundle\ADesignsCalendarBundle(),
             new AncaRebeca\FullCalendarBundle\FullCalendarBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             //new FOS\RestBundle\FOSRestBundle(),
+            new Medical\HopitaleBundle\HopitaleBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

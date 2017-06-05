@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Laboratoires list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nomlab</th>
+                <th>Maillab</th>
+                <th>Tellab</th>
+                <th>Faxlab</th>
+                <th>Houverture</th>
+                <th>Hfermeture</th>
+                <th>Siteweb</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for laboratoire in laboratoires %}
+            <tr>
+                <td><a href="{{ path('laboratoire_show', { 'id': laboratoire.id }) }}">{{ laboratoire.id }}</a></td>
+                <td>{{ laboratoire.nomLab }}</td>
+                <td>{{ laboratoire.mailLab }}</td>
+                <td>{{ laboratoire.telLab }}</td>
+                <td>{{ laboratoire.faxLab }}</td>
+                <td>{{ laboratoire.hOuverture }}</td>
+                <td>{{ laboratoire.hFermeture }}</td>
+                <td>{{ laboratoire.siteWeb }}</td>
+                <td>{{ laboratoire.latitude }}</td>
+                <td>{{ laboratoire.longitude }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('laboratoire_show', { 'id': laboratoire.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('laboratoire_edit', { 'id': laboratoire.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('laboratoire_new') }}">Create a new laboratoire</a>
+        </li>
+    </ul>
+{% endblock %}
