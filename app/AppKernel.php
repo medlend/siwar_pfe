@@ -21,7 +21,7 @@ class AppKernel extends Kernel
             new Medical\MedecinBundle\MedecinBundle(),
             new Medical\LaboratoireBundle\LaboratoireBundle(),
             new Medical\PharmacieBundle\PharmacieBundle(),
-            new ADesigns\CalendarBundle\ADesignsCalendarBundle(),
+//            new ADesigns\CalendarBundle\ADesignsCalendarBundle(),
             new AncaRebeca\FullCalendarBundle\FullCalendarBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             //new FOS\RestBundle\FOSRestBundle(),

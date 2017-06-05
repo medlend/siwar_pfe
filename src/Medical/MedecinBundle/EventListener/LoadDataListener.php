@@ -35,9 +35,9 @@ class LoadDataListener
         $dateStrat = \DateTime::createFromFormat('Y-m-d H:i:s', '2017-05-28 21:24:38');
         $dateEnd = \DateTime::createFromFormat('Y-m-d H:i:s', '2017-05-28 21:29:38');
 
-        $cust =  new MyCustomEvent('Event Title 1', $dateStrat);
-        $cust->setEndDate($dateEnd);
-        $cust->setAllDay(false);
+        $cust =  new MyCustomEvent('Event Title 1', new \DateTime());
+//        $cust->setEndDate($dateEnd);
+//        $cust->setAllDay(false);
         $calendarEvent->addEvent($cust);
 //        $calendarEvent->addEvent(new MyCustomEvent('Event Title 2', $dateStrat));
 //        $calendarEvent->addEvent(new MyCustomEvent('Event Titlwwe 2', $dateStrat));
