@@ -4,6 +4,7 @@ namespace Medical\MedecinBundle\Form;
 
 use FOS\UserBundle\Form\Type\RegistrationFormType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,9 +26,9 @@ class MedecinType extends AbstractType
             ->add('hFermeture')
             ->add('siteWeb')
             ->add('adresse')
-           // ->add('latitude')
-            //->add('longitude')
-            ->add('specialite')        ;
+            ->add('specialite')
+            ->add('image', FileType::class, array('label' => 'Profile image'))
+        ;
     }
     
     /**

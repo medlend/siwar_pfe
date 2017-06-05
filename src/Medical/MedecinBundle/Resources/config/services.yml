@@ -2,3 +2,15 @@ services:
 #    medecin.example:
 #        class: Medical\MedecinBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    image.uploader:
+        class: Medical\MedecinBundle\Services\FileUploader
+        arguments: ['%profile_image_directory%']
+
+    image.doctrine_listener:
+        class: Medical\MedecinBundle\EventsListener\DoctrineListener
+        arguments: ['@image.uploader','%profile_image_directory%']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postLoad }

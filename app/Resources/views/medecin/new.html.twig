@@ -1,21 +1,113 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Medecin creation</h1>
-    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('medecin_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    {#<h1>Medecin creation</h1>#}
+    {#<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">#}
+
+    {#{{ form_start(form) }}#}
+    {#{{ form_widget(form) }}#}
+    {#<input type="submit" value="Create" class="btn btn-primary"/>#}
+    {#{{ form_end(form) }}#}
+
+
+
+
+    {#<ul>#}
+    {#<li>#}
+    {#<a href="{{ path('medecin_index') }}">Back to the list</a>#}
+    {#</li>#}
+    {#</ul>#}
+    {#</div>#}
+
+    <div class="panel panel-primary" style="margin:20px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">Registration Medecin</h3>
+        </div>
+        <div class="panel-body">
+
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.user.username, "username") }}
+                    {{ form_widget(form.user.username, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.user.email, "email" ) }}
+                    {{ form_widget(form.user.email, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.user.plainPassword.first) }}
+                    {{ form_widget(form.user.plainPassword.first, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.user.plainPassword.second) }}
+                    {{ form_widget(form.user.plainPassword.second, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.numTel, "Mobile") }}
+                    {{ form_widget(form.numTel, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.fax, "Fax") }}
+                    {{ form_widget(form.fax, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.hOuverture, "Heure Ouverture") }}
+                    {{ form_widget(form.hOuverture, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.hFermeture, "Heure Fermeture") }}
+                    {{ form_widget(form.hFermeture, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.adresse, "Adresse") }}
+                    {{ form_widget(form.adresse, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.siteWeb, "Site Web") }}
+                    {{ form_widget(form.siteWeb, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.specialite, "Specialite") }}
+                    {{ form_widget(form.specialite, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.image, "Image") }}
+                    {{ form_widget(form.image, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-12 col-sm-12">
+                    {{ form_label(form.description, "Description") }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control input-sm"'}}) }}
+
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group  pull-right" >
+                    <input type="submit" class="btn btn-primary" value="Submit"/>
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
     </div>
-
 
 
 {% endblock %}
@@ -23,7 +115,8 @@
     {% block javascripts %}
         <script src="//code.jquery.com/jquery-2.1.1.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx4U0wGOGkj2jDW6PPIjACGl8O8YqTKhY&libraries=places"></script>
+        <script type="text/javascript"
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx4U0wGOGkj2jDW6PPIjACGl8O8YqTKhY&libraries=places"></script>
 
         <script>
             var options = {
@@ -31,9 +124,9 @@
                 componentRestrictions: {country: 'tn'}
             };
             var input = document.getElementById('medical_medecinbundle_medecin_adresse');
-            autocomplete = new google.maps.places.Autocomplete(input,options);
+            autocomplete = new google.maps.places.Autocomplete(input, options);
 
-            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
                 var place = autocomplete.getPlace();
                 if (place.geometry.viewport) {
                     geomap.fitBounds(place.geometry.viewport);

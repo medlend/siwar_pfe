@@ -9,7 +9,7 @@
 namespace Medical\MedecinBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -78,6 +78,19 @@ class Medecin
      * @ORM\ManyToOne(targetEntity="Medical\MedecinBundle\Entity\Specialite", inversedBy="medecin")
      */
     private $specialite;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255,nullable=true)
+     *
+     * @Assert\Image(
+     *      maxSize="1024k",
+     *      mimeTypes = { "image/png","image/jpeg", "image/jpg", "image/gif" },
+     *      mimeTypesMessage = "Please upload a valid Image"
+     * )
+     */
+    private $image;
 
     /**
      * @return mixed
@@ -294,6 +307,24 @@ class Medecin
     public function setSpecialite($specialite)
     {
         $this->specialite = $specialite;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     * @return Medecin
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
         return $this;
     }
 
