@@ -4,6 +4,7 @@ namespace Medical\HopitaleBundle\Form;
 
 use FOS\UserBundle\Form\Type\RegistrationFormType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,14 +19,13 @@ class HopitaleType extends AbstractType
             'label' => false
         ))
             ->add('nomHopitale')
-            ->add('mailHopitale')
             ->add('telHopitale')
             ->add('faxHopitale')
             ->add('hOuverture')
             ->add('hFermeture')
             ->add('siteWeb')
-            ->add('latitude')
-            ->add('longitude')     ;
+            ->add('adresse')
+            ->add('image', FileType::class, array('label' => 'Profile image'));
     }
     
     /**

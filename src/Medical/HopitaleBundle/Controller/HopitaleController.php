@@ -44,6 +44,11 @@ class HopitaleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $hopitale->getUser();
+            $user->addRole('ROLE_HOPITALE')->setEnabled(true);
+            $hopitale->setUser($user);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($hopitale);
             $em->flush($hopitale);
@@ -66,6 +71,9 @@ class HopitaleController extends Controller
     public function showAction(Hopitale $hopitale)
     {
         $deleteForm = $this->createDeleteForm($hopitale);
+        $img = $hopitale->getImage();
+        $var= explode('web',$img);
+        $hopitale->setImage('http://localhost/siwar_pfe/web'.$var[1]);
 
         return $this->render('hopitale/show.html.twig', array(
             'hopitale' => $hopitale,

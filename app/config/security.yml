@@ -5,8 +5,12 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
+        ROLE_PHARMACIE: [ROLE_PHARMACIE, ROLE_USER]
+        ROLE_MEDECIN: [ROLE_MEDECIN, ROLE_USER]
+        ROLE_LABORATOIRE: [ROLE_LABORATOIRE, ROLE_USER]
+        ROLE_HOPITALE: [ROLE_HOPITALE, ROLE_USER]
         ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         fos_userbundle:

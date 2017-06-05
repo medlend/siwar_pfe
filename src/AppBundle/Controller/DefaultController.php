@@ -8,13 +8,25 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+
     /**
-     * @Route("/admin", name="homepage")
+     * @Route("/admin", name="homepage_admin")
      */
-    public function indexAction(Request $request)
+    public function indexAdminAction(Request $request)
     {
         // replace this example code with whatever you need
         return $this->render('default/adminIndex.html.twig', [
+
+        ]);
+    }
+
+    /**
+     * @Route("/registration/type", name="registration_type")
+     */
+    public function registrationTypeAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('default/registration.html.twig', [
 
         ]);
     }

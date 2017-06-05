@@ -7,6 +7,12 @@ services:
         class: Medical\MedecinBundle\Services\FileUploader
         arguments: ['%profile_image_directory%']
 
+    login.user:
+        class: Medical\MedecinBundle\EventListener\LoginListener
+        arguments: ['@service_container']
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelRequest }
+
     image.doctrine_listener:
         class: Medical\MedecinBundle\EventsListener\DoctrineListener
         arguments: ['@image.uploader','%profile_image_directory%']

@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <!-- Navigation -->
+    {#<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">#}
+        {#<div class="container">#}
+            {#<!-- Brand and toggle get grouped for better mobile display -->#}
+            {#<div class="navbar-header">#}
+                {#<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">#}
+                    {#<span class="sr-only">Toggle navigation</span>#}
+                    {#<span class="icon-bar"></span>#}
+                    {#<span class="icon-bar"></span>#}
+                    {#<span class="icon-bar"></span>#}
+                {#</button>#}
+                {#<a class="navbar-brand" href="#">Start Bootstrap</a>#}
+            {#</div>#}
+            {#<!-- Collect the nav links, forms, and other content for toggling -->#}
+            {#<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">#}
+                {#<ul class="nav navbar-nav">#}
+                    {#<li>#}
+                        {#<a href="#">About</a>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="#">Services</a>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="#">Contact</a>#}
+                    {#</li>#}
+                {#</ul>#}
+            {#</div>#}
+            {#<!-- /.navbar-collapse -->#}
+        {#</div>#}
+        {#<!-- /.container -->#}
+    {#</nav>#}
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Introduction Row -->
+        {#<div class="row">#}
+            {#<div class="col-lg-12">#}
+                {#<h1 class="page-header">About Us#}
+                    {#<small>It's Nice to Meet You!</small>#}
+                {#</h1>#}
+                {#<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint, explicabo dolores ipsam aliquam inventore corrupti eveniet quisquam quod totam laudantium repudiandae obcaecati ea consectetur debitis velit facere nisi expedita vel?</p>#}
+            {#</div>#}
+        {#</div>#}
+
+        <!-- Team Members Row -->
+        <div class="row" style="margin-top: 3%">
+
+            <div class="col-lg-6 text-center">
+                <div class="img-circle" style="background-image: url('https://www.erasme.ulb.ac.be/sites/default/files/styles/large/public/images/articles/2016/couloir_hopital_thinkstockphotos-478395153_0.jpg');background-size: cover;background-position: center;background-repeat: no-repeat;width: 100%;height: 250px"></div>
+
+                <a class="" href="{{ path('hopitale_new') }}"><h3>Hopitale </h3></a>
+
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center">
+                <div class="img-circle" style="background-image: url('http://www.atousante.com/wp-content/uploads/2011/05/Fotolia-biologistes-424x250.jpg');background-size: cover;background-position: center;background-repeat: no-repeat;width: 100%;height: 250px"></div>
+                <a class="" href="{{ path('laboratoire_new') }}"><h3>Laboratoire </h3></a>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center">
+                <div class="img-circle" style="background-image: url('http://www.recrutement-medical.net/wp-content/uploads/2016/10/8265_1375088485_sante-salarie-medecin-travail.jpg');background-size: cover;background-position: center;background-repeat: no-repeat;width: 100%;height: 250px"></div>
+                <a class="" href="{{ path('medecin_new') }}"><h3>Medecin </h3></a>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center">
+                <div class="img-circle" style="background-image: url('http://complexe.darattabib.com/wp-content/uploads/2013/03/pharmacie_gd.jpg');background-size: cover;background-position: center;background-repeat: no-repeat;width: 100%;height: 250px"></div>
+                <a class="" href="{{ path('pharmacie_new') }}"><h3>Pharmacie </h3></a>
+            </div>
+
+        </div>
+
+        <hr>
+
+        {#<!-- Footer -->#}
+        {#<footer>#}
+            {#<div class="row">#}
+                {#<div class="col-lg-12">#}
+                    {#<p>Copyright &copy; Your Website 2014</p>#}
+                {#</div>#}
+                {#<!-- /.col-lg-12 -->#}
+            {#</div>#}
+            {#<!-- /.row -->#}
+        {#</footer>#}
+
+    </div>
+    <!-- /.container -->
+
+{% endblock %}
+

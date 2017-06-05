@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
+use User\UserBundle\Entity\Utilisateur;
+use User\UserBundle\UserBundle;
 
 /**
  * Medecin controller.
@@ -39,11 +41,13 @@ class MedecinController extends Controller
     /**
      * Lists all medecin entities.
      *
-     * @Route("/calendar", name="medecin_calendar")
+     * @Route("/calendar/{id}", name="medecin_calendar")
      * @Method("GET")
      */
-    public function calendarAction()
+    public function calendarAction(Medecin $medecin)
     {
+
+//        dump($medecin);die;
 //        $dispatcher = new EventDispatcher();
 //        $event = new \AncaRebeca\FullCalendarBundle\Event\CalendarEvent( new \DateTime(),new \DateTime(),[]);
 //        $dispatcher->dispatch('fullcalendar.set_data', $event);
@@ -68,6 +72,15 @@ class MedecinController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /**
+             * @var $user Utilisateur
+             */
+            $user = $medecin->getUser();
+            $user->addRole('ROLE_MEDECIN')->setEnabled(true);
+
+            $medecin->setUser($user);
+
 
 //            $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' .str_replace(" ", "+", $medecin->getAdresse()). '&key=AIzaSyBx4U0wGOGkj2jDW6PPIjACGl8O8YqTKhY';
 //            $data = json_decode($this->curl_get_contents($url))->results[0]->geometry->location;
