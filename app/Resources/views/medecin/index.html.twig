@@ -35,7 +35,7 @@
 
                             {% for medecin in medecins %}
                                 <tr>
-                                    <td><a href="{{ path('medecin_show', { 'id': medecin.id }) }}">{{ medecin.description }}</a></td>
+                                    <td><a href="{{ path('medecin_show', { 'id': medecin.id }) }}">{{ medecin.user.username}}</a></td>
                                     <td>{{ medecin.numTel }}</td>
                                     <td>{{ medecin.hOuverture }}</td>
                                     <td>{{ medecin.hFermeture }}</td>

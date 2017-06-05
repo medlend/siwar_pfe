@@ -44,6 +44,10 @@ class PharmacieController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $pharmacie->getUser();
+            $user->addRole('ROLE_PHARMACIE')->setEnabled(true);
+            $pharmacie->setUser($user);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($pharmacie);
             $em->flush($pharmacie);
@@ -66,6 +70,10 @@ class PharmacieController extends Controller
     public function showAction(Pharmacie $pharmacie)
     {
         $deleteForm = $this->createDeleteForm($pharmacie);
+
+        $img = $pharmacie->getImage();
+        $var= explode('web',$img);
+        $pharmacie->setImage('http://localhost/siwar_pfe/web'.$var[1]);
 
         return $this->render('pharmacie/show.html.twig', array(
             'pharmacie' => $pharmacie,

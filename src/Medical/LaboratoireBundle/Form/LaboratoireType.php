@@ -2,6 +2,7 @@
 
 namespace Medical\LaboratoireBundle\Form;
 
+use FOS\UserBundle\Form\Type\RegistrationFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,15 +18,14 @@ class LaboratoireType extends AbstractType
             ->add('user',RegistrationFormType::class , array(
             'label' => false
         ))
-            ->add('mailLab')
+            ->add('adresse')
+            ->add('nomLab')
             ->add('telLab')
             ->add('faxLab')
             ->add('hOuverture')
             ->add('hFermeture')
             ->add('siteWeb')
-            ->add('latitude')
-            ->add('longitude')
-            ->add('user')        ;
+            ->add('image')   ;
     }
     
     /**

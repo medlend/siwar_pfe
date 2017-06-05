@@ -1,16 +1,150 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Pharmacie creation</h1>
+    {#<h1>Pharmacie creation</h1>#}
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+    {#{{ form_start(form) }}#}
+        {#{{ form_widget(form) }}#}
+        {#<input type="submit" value="Create" />#}
+    {#{{ form_end(form) }}#}
 
-    <ul>
-        <li>
-            <a href="{{ path('pharmacie_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    {#<ul>#}
+        {#<li>#}
+            {#<a href="{{ path('pharmacie_index') }}">Back to the list</a>#}
+        {#</li>#}
+    {#</ul>#}
+
+
+
+
+
+
+
+
+    <div class="panel panel-primary" style="margin:20px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">Registration Laboratoire</h3>
+        </div>
+        <div class="panel-body">
+
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.user.username, "username") }}
+                    {{ form_widget(form.user.username, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.user.email, "email" ) }}
+                    {{ form_widget(form.user.email, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.user.plainPassword.first) }}
+                    {{ form_widget(form.user.plainPassword.first, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.user.plainPassword.second) }}
+                    {{ form_widget(form.user.plainPassword.second, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.nomPharmacie, "Nom Pharmacie") }}
+                    {{ form_widget(form.nomPharmacie, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.telPharmacie, "Mobile") }}
+                    {{ form_widget(form.telPharmacie, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.faxPharmacie, "Fax") }}
+                    {{ form_widget(form.faxPharmacie, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.hOuverture, "Heure Ouverture") }}
+                    {{ form_widget(form.hOuverture, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.hFermeture, "Heure Fermeture") }}
+                    {{ form_widget(form.hFermeture, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.adresse, "Adresse") }}
+                    {{ form_widget(form.adresse, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.siteWeb, "Site Web") }}
+                    {{ form_widget(form.siteWeb, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.type, "Type") }}
+                    {{ form_widget(form.type, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.image, "Image") }}
+                    {{ form_widget(form.image, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group  pull-right" >
+                    <input type="submit" class="btn btn-primary" value="Submit"/>
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+
 {% endblock %}
+
+    {% block javascripts %}
+        <script src="//code.jquery.com/jquery-2.1.1.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript"
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx4U0wGOGkj2jDW6PPIjACGl8O8YqTKhY&libraries=places"></script>
+
+        <script>
+            var options = {
+//                types: ['(regions)'],
+                componentRestrictions: {country: 'tn'}
+            };
+            var input = document.getElementById('medical_pharmaciebundle_pharmacie_adresse');
+            autocomplete = new google.maps.places.Autocomplete(input, options);
+
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                var place = autocomplete.getPlace();
+                if (place.geometry.viewport) {
+                    geomap.fitBounds(place.geometry.viewport);
+                } else {
+                    geomap.setCenter(place.geometry.location);
+                    geomap.setZoom(17);
+                }
+            });
+
+
+        </script>
+
+
+
+
+
+
+
+
+
+    {% endblock %}

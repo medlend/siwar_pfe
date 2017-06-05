@@ -2,6 +2,7 @@
 
 namespace Medical\PharmacieBundle\Form;
 
+use FOS\UserBundle\Form\Type\RegistrationFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,14 +18,14 @@ class PharmacieType extends AbstractType
             ->add('user',RegistrationFormType::class , array(
                 'label' => false
             ))
-            ->add('mailPharmacie')
+            ->add('adresse')
+            ->add('nomPharmacie')
             ->add('telPharmacie')
             ->add('faxPharmacie')
             ->add('hOuverture')
             ->add('hFermeture')
             ->add('siteWeb')
-            ->add('latitude')
-            ->add('longitude')
+            ->add('image')
             ->add('type')       ;
     }
     

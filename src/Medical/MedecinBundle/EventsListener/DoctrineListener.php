@@ -9,8 +9,10 @@
 namespace Medical\MedecinBundle\EventsListener;
 
 use Medical\HopitaleBundle\Entity\Hopitale;
+use Medical\LaboratoireBundle\Entity\Laboratoire;
 use Medical\MedecinBundle\Entity\Medecin;
 use Medical\MedecinBundle\Services\FileUploader;
+use Medical\PharmacieBundle\Entity\Pharmacie;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -59,7 +61,7 @@ class DoctrineListener
 
         $entity = $args->getEntity();
 //dump($entity);
-        if (!$entity instanceof Medecin && !$entity instanceof Hopitale ) {
+        if (!$entity instanceof Medecin && !$entity instanceof Hopitale && !$entity instanceof Laboratoire && !$entity instanceof Pharmacie) {
             return;
         }
 
@@ -77,7 +79,7 @@ class DoctrineListener
     private function uploadFile($entity)
     {
         // upload only works for Product entities
-        if (!$entity instanceof Medecin && !$entity instanceof Hopitale) {
+        if (!$entity instanceof Medecin && !$entity instanceof Hopitale && !$entity instanceof Laboratoire && !$entity instanceof Pharmacie) {
             return;
         }
 

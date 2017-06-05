@@ -44,6 +44,11 @@ class LaboratoireController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $laboratoire->getUser();
+            $user->addRole('ROLE_LABORATOIRE')->setEnabled(true);
+            $laboratoire->setUser($user);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($laboratoire);
             $em->flush($laboratoire);
@@ -66,6 +71,10 @@ class LaboratoireController extends Controller
     public function showAction(Laboratoire $laboratoire)
     {
         $deleteForm = $this->createDeleteForm($laboratoire);
+
+        $img = $laboratoire->getImage();
+        $var= explode('web',$img);
+        $laboratoire->setImage('http://localhost/siwar_pfe/web'.$var[1]);
 
         return $this->render('laboratoire/show.html.twig', array(
             'laboratoire' => $laboratoire,

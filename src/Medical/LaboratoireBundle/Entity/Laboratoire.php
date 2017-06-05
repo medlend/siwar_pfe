@@ -9,6 +9,7 @@
 namespace Medical\LaboratoireBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -25,47 +26,47 @@ class Laboratoire
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=4000)
+     * @ORM\Column(type="string", length=4000, nullable=true)
      */
     private $nomLab;
 
     /**
-     * @ORM\Column(type="string", length=4000)
+     * @ORM\Column(type="string", length=4000, nullable=true)
      */
-    private $mailLab;
+    private $adresse;
 
     /**
-     * @ORM\Column(type="string", length=128, name="num_tel")
+     * @ORM\Column(type="string", length=128, name="num_tel", nullable=true)
      */
     private $telLab;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
     private $faxLab;
 
     /**
-     * @ORM\Column(type="string", length=128, name="h_ouverture")
+     * @ORM\Column(type="string", length=128, name="h_ouverture", nullable=true)
      */
     private $hOuverture;
 
     /**
-     * @ORM\Column(type="string", length=128, name="h_fermeture")
+     * @ORM\Column(type="string", length=128, name="h_fermeture", nullable=true)
      */
     private $hFermeture;
 
     /**
-     * @ORM\Column(type="string", length=128, name="site_web")
+     * @ORM\Column(type="string", length=128, name="site_web", nullable=true)
      */
     private $siteWeb;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
     private $latitude;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
     private $longitude;
 
@@ -73,6 +74,19 @@ class Laboratoire
      * @ORM\OneToOne(targetEntity="User\UserBundle\Entity\Utilisateur", cascade={"persist","remove"})
      */
     private $user;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255,nullable=true)
+     *
+     * @Assert\Image(
+     *      maxSize="1024k",
+     *      mimeTypes = { "image/png","image/jpeg", "image/jpg", "image/gif" },
+     *      mimeTypesMessage = "Please upload a valid Image"
+     * )
+     */
+    private $image;
 
     /**
      * @return mixed
@@ -84,13 +98,211 @@ class Laboratoire
 
     /**
      * @param mixed $id
+     * @return Laboratoire
      */
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getNomLab()
+    {
+        return $this->nomLab;
+    }
 
+    /**
+     * @param mixed $nomLab
+     * @return Laboratoire
+     */
+    public function setNomLab($nomLab)
+    {
+        $this->nomLab = $nomLab;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * @param mixed $adresse
+     * @return Laboratoire
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTelLab()
+    {
+        return $this->telLab;
+    }
+
+    /**
+     * @param mixed $telLab
+     * @return Laboratoire
+     */
+    public function setTelLab($telLab)
+    {
+        $this->telLab = $telLab;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFaxLab()
+    {
+        return $this->faxLab;
+    }
+
+    /**
+     * @param mixed $faxLab
+     * @return Laboratoire
+     */
+    public function setFaxLab($faxLab)
+    {
+        $this->faxLab = $faxLab;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHOuverture()
+    {
+        return $this->hOuverture;
+    }
+
+    /**
+     * @param mixed $hOuverture
+     * @return Laboratoire
+     */
+    public function setHOuverture($hOuverture)
+    {
+        $this->hOuverture = $hOuverture;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHFermeture()
+    {
+        return $this->hFermeture;
+    }
+
+    /**
+     * @param mixed $hFermeture
+     * @return Laboratoire
+     */
+    public function setHFermeture($hFermeture)
+    {
+        $this->hFermeture = $hFermeture;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSiteWeb()
+    {
+        return $this->siteWeb;
+    }
+
+    /**
+     * @param mixed $siteWeb
+     * @return Laboratoire
+     */
+    public function setSiteWeb($siteWeb)
+    {
+        $this->siteWeb = $siteWeb;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @param mixed $latitude
+     * @return Laboratoire
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * @param mixed $longitude
+     * @return Laboratoire
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return Laboratoire
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     * @return Laboratoire
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
 
 
 

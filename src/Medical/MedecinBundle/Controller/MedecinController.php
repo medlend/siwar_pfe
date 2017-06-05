@@ -68,6 +68,10 @@ class MedecinController extends Controller
     public function newAction(Request $request)
     {
         $medecin = new Medecin();
+
+
+
+
         $form = $this->createForm('Medical\MedecinBundle\Form\MedecinType', $medecin);
         $form->handleRequest($request);
 
@@ -113,6 +117,10 @@ class MedecinController extends Controller
     public function showAction(Medecin $medecin)
     {
         $deleteForm = $this->createDeleteForm($medecin);
+
+        $img = $medecin->getImage();
+        $var= explode('web',$img);
+        $medecin->setImage('http://localhost/siwar_pfe/web'.$var[1]);
 
         return $this->render('medecin/show.html.twig', array(
             'medecin' => $medecin,

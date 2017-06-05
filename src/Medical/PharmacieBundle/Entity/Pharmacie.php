@@ -9,6 +9,7 @@
 namespace Medical\PharmacieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -25,47 +26,47 @@ class Pharmacie
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=4000)
+     * @ORM\Column(type="string", length=4000, nullable=true)
      */
     private $nomPharmacie;
 
     /**
-     * @ORM\Column(type="string", length=4000)
+     * @ORM\Column(type="string", length=4000, nullable=true)
      */
-    private $mailPharmacie;
+    private $adresse;
 
     /**
-     * @ORM\Column(type="string", length=128, name="num_tel")
+     * @ORM\Column(type="string", length=128, name="num_tel", nullable=true)
      */
     private $telPharmacie;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
     private $faxPharmacie;
 
     /**
-     * @ORM\Column(type="string", length=128, name="h_ouverture")
+     * @ORM\Column(type="string", length=128, name="h_ouverture", nullable=true)
      */
     private $hOuverture;
 
     /**
-     * @ORM\Column(type="string", length=128, name="h_fermeture")
+     * @ORM\Column(type="string", length=128, name="h_fermeture", nullable=true)
      */
     private $hFermeture;
 
     /**
-     * @ORM\Column(type="string", length=128, name="site_web")
+     * @ORM\Column(type="string", length=128, name="site_web", nullable=true)
      */
     private $siteWeb;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
     private $latitude;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
     private $longitude;
 
@@ -75,9 +76,22 @@ class Pharmacie
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
     private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255,nullable=true)
+     *
+     * @Assert\Image(
+     *      maxSize="1024k",
+     *      mimeTypes = { "image/png","image/jpeg", "image/jpg", "image/gif" },
+     *      mimeTypesMessage = "Please upload a valid Image"
+     * )
+     */
+    private $image;
 
     /**
      * @return mixed
@@ -118,18 +132,18 @@ class Pharmacie
     /**
      * @return mixed
      */
-    public function getMailPharmacie()
+    public function getAdresse()
     {
-        return $this->mailPharmacie;
+        return $this->adresse;
     }
 
     /**
-     * @param mixed $mailPharmacie
+     * @param mixed $adresse
      * @return Pharmacie
      */
-    public function setMailPharmacie($mailPharmacie)
+    public function setAdresse($adresse)
     {
-        $this->mailPharmacie = $mailPharmacie;
+        $this->adresse = $adresse;
         return $this;
     }
 
@@ -294,6 +308,25 @@ class Pharmacie
         $this->type = $type;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     * @return Pharmacie
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
 
 
 

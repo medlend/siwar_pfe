@@ -38,7 +38,7 @@ class DefaultController extends Controller
                     ->getRepository('LaboratoireBundle:Laboratoire')
                     ->findOneBy(array('user' => $user));
 
-                return $this->redirect($this->generateUrl('medecin_calendar', array('id' => $labo->getId())));
+                return $this->redirect($this->generateUrl('laboratoire_show', array('id' => $labo->getId())));
             }
 
             if ($user->hasRole('ROLE_HOPITALE')) {
@@ -57,7 +57,7 @@ class DefaultController extends Controller
                     ->getRepository('PharmacieBundle:Pharmacie')
                     ->findOneBy(array('user' => $user));
 
-                return $this->redirect($this->generateUrl('medecin_calendar', array('id' => $pha->getId())));
+                return $this->redirect($this->generateUrl('pharmacie_show', array('id' => $pha->getId())));
             }
 
         }
