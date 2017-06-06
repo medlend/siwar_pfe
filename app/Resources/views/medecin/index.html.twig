@@ -40,8 +40,12 @@
                                     <td>{{ medecin.hOuverture }}</td>
                                     <td>{{ medecin.hFermeture }}</td>
                                     <td>
-                                                <a class="btn btn-outline btn-danger"  href="{{ path('medecin_edit', { 'id': medecin.id }) }}">supp</a>
-                                                <a class="btn btn-outline btn-warning"  href="{{ path('medecin_edit', { 'id': medecin.id }) }}">activer</a>
+                                        {% if medecin.user.enabled == 1 %}
+                                            <a class="btn btn-outline btn-info"  href="{{ path('medecin_deactiver', { 'id': medecin.id  }) }}">désactiver</a>
+                                        {% elseif medecin.user.enabled == 0 %}
+                                            <a class="btn btn-outline btn-warning"  href="{{ path('medecin_activer', { 'id': medecin.id  }) }}">activer</a>
+                                        {% endif %}
+                                        <a class="btn btn-outline btn-danger"  href="{{ path('medecin_delete', { 'id': medecin.id  }) }}">supp</a>
                                     </td>
                                 </tr>
                             {% endfor %}

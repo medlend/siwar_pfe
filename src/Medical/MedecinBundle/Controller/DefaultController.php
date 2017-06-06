@@ -2,8 +2,13 @@
 
 namespace Medical\MedecinBundle\Controller;
 
+use Medical\MedecinBundle\Entity\Medecin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use User\UserBundle\Entity\Utilisateur;
 
 class DefaultController extends Controller
@@ -64,4 +69,148 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('fos_user_security_login'));
 
     }
+
+    /**
+     * @Route("/medecin/list", name="api_medecin_list")
+     */
+    public function getMedecinsAction()
+    {
+
+
+        $medecins = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('MedecinBundle:Medecin')
+            ->createQueryBuilder('e')
+            ->join('e.user', 'r')
+            ->where('r.enabled = 1')
+            ->getQuery()
+            ->getResult();
+
+
+        $encoders = array(new JsonEncode());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $list = array_map(function ($entry) use ($serializer) {
+            $entry->setImage(null);
+            return $serializer->serialize($entry, 'json');
+        }, $medecins);
+
+        return new JsonResponse($list);
+    }
+
+
+    /**
+     * @Route("/hobitale/list", name="api_hopitale_list")
+     */
+    public function getHopitalesAction()
+    {
+
+        $hopitales = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('HopitaleBundle:Hopitale')
+            ->createQueryBuilder('e')
+            ->join('e.user', 'r')
+            ->where('r.enabled = 1')
+            ->getQuery()
+            ->getResult();
+
+
+        $encoders = array(new JsonEncode());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $list = array_map(function ($entry) use ($serializer) {
+            $entry->setImage(null);
+            return $serializer->serialize($entry, 'json');
+        }, $hopitales);
+
+        return new JsonResponse($list);
+    }
+
+
+    /**
+     * @Route("/laboratoires/list", name="api_laboratoire_list")
+     */
+    public function getLaboratoiresAction()
+    {
+
+        $laboratoires = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('LaboratoireBundle:Laboratoire')
+            ->createQueryBuilder('e')
+            ->join('e.user', 'r')
+            ->where('r.enabled = 1')
+            ->getQuery()
+            ->getResult();
+
+
+        $encoders = array(new JsonEncode());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $list = array_map(function ($entry) use ($serializer) {
+            $entry->setImage(null);
+            return $serializer->serialize($entry, 'json');
+        }, $laboratoires);
+
+        return new JsonResponse($list);
+    }
+
+    /**
+     * @Route("/pharmacies/list", name="api_pharmacie_list")
+     */
+    public function getPharmaciesAction()
+    {
+
+        $pharmacies = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('PharmacieBundle:Pharmacie')
+            ->createQueryBuilder('e')
+            ->join('e.user', 'r')
+            ->where('r.enabled = 1')
+            ->getQuery()
+            ->getResult();
+
+
+        $encoders = array(new JsonEncode());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $list = array_map(function ($entry) use ($serializer) {
+            $entry->setImage(null);
+            return $serializer->serialize($entry, 'json');
+        }, $pharmacies);
+
+        return new JsonResponse($list);
+    }
+
+    /**
+     * @Route("/medical/inscription", name="api_medical_inscription")
+     */
+    public function postMedicalInscriptionAction()
+    {
+        die('aaa');
+
+    }
+
+    /**
+     * @Route("/medical/connextion", name="api_medical_connextion")
+     */
+    public function postMedicalConnextionAction()
+    {
+        die('bbbb');
+
+    }
+
+    /**
+     * @Route("/medical/rendez-vous", name="api_medical_rendez_vouz")
+     */
+    public function postMedicalRendezVousAction()
+    {
+        die('cccc');
+
+    }
+
+
 }

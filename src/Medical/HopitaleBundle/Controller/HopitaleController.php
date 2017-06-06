@@ -5,7 +5,9 @@ namespace Medical\HopitaleBundle\Controller;
 use Medical\HopitaleBundle\Entity\Hopitale;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Hopitale controller.
@@ -70,10 +72,11 @@ class HopitaleController extends Controller
      */
     public function showAction(Hopitale $hopitale)
     {
+
         $deleteForm = $this->createDeleteForm($hopitale);
         $img = $hopitale->getImage();
-        $var= explode('web',$img);
-        $hopitale->setImage('http://localhost/siwar_pfe/web'.$var[1]);
+        $var = explode('web', $img);
+        $hopitale->setImage('http://localhost/siwar_pfe/web' . $var[1]);
 
         return $this->render('hopitale/show.html.twig', array(
             'hopitale' => $hopitale,
@@ -109,19 +112,59 @@ class HopitaleController extends Controller
     /**
      * Deletes a hopitale entity.
      *
-     * @Route("/{id}", name="hopitale_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="hopitale_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, Hopitale $hopitale)
     {
-        $form = $this->createDeleteForm($hopitale);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($hopitale);
+        $em->flush($hopitale);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($hopitale);
-            $em->flush($hopitale);
-        }
+
+        return $this->redirectToRoute('hopitale_index');
+    }
+
+
+    /**
+     * Deletes a hopitale entity.
+     *
+     * @Route("/activer/{id}", name="hopitale_activer")
+     * @Method("GET")
+     */
+    public function activerAction(Request $request, Hopitale $hopitale)
+    {
+
+        $userId = $hopitale->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $RAW_QUERY = "UPDATE `user` SET `enabled` = '1' WHERE `id` = $userId ;";
+
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
+
+        return $this->redirectToRoute('hopitale_index');
+    }
+
+
+    /**
+     * Deletes a hopitale entity.
+     *
+     * @Route("/deactiver/{id}", name="hopitale_deactiver")
+     * @Method("GET")
+     */
+    public function deactiverAction(Request $request, Hopitale $hopitale)
+    {
+
+        $userId = $hopitale->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $RAW_QUERY = "UPDATE `user` SET `enabled` = '0' WHERE `id` = $userId ;";
+
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
 
         return $this->redirectToRoute('hopitale_index');
     }
@@ -138,7 +181,6 @@ class HopitaleController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('hopitale_delete', array('id' => $hopitale->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

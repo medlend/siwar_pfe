@@ -156,22 +156,65 @@ class MedecinController extends Controller
     /**
      * Deletes a medecin entity.
      *
-     * @Route("/{id}", name="medecin_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="medecin_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, Medecin $medecin)
     {
-        $form = $this->createDeleteForm($medecin);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($medecin);
             $em->flush($medecin);
-        }
+        return $this->redirectToRoute('medecin_index');
+    }
+
+    /**
+     * Deletes a hopitale entity.
+     *
+     * @Route("/activer/{id}", name="medecin_activer")
+     * @Method("GET")
+     */
+    public function activerAction(Request $request, Medecin $medecin)
+    {
+
+        $userId = $medecin->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $RAW_QUERY = "UPDATE `user` SET `enabled` = '1' WHERE `id` = $userId ;";
+
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
 
         return $this->redirectToRoute('medecin_index');
     }
+
+
+    /**
+     * Deletes a hopitale entity.
+     *
+     * @Route("/deactiver/{id}", name="medecin_deactiver")
+     * @Method("GET")
+     */
+    public function deactiverAction(Request $request, Medecin $medecin)
+    {
+
+        $userId = $medecin->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $RAW_QUERY = "UPDATE `user` SET `enabled` = '0' WHERE `id` = $userId ;";
+
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
+
+        return $this->redirectToRoute('medecin_index');
+    }
+
+
+
+
+
 
     /**
      * Creates a form to delete a medecin entity.

@@ -109,22 +109,65 @@ class PharmacieController extends Controller
     /**
      * Deletes a pharmacie entity.
      *
-     * @Route("/{id}", name="pharmacie_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="pharmacie_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, Pharmacie $pharmacie)
     {
-        $form = $this->createDeleteForm($pharmacie);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($pharmacie);
             $em->flush($pharmacie);
-        }
+
 
         return $this->redirectToRoute('pharmacie_index');
     }
+
+
+
+    /**
+     * Deletes a hopitale entity.
+     *
+     * @Route("/activer/{id}", name="pharmacie_activer")
+     * @Method("GET")
+     */
+    public function activerAction(Request $request, Pharmacie $pharmacie)
+    {
+
+        $userId = $pharmacie->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $RAW_QUERY = "UPDATE `user` SET `enabled` = '1' WHERE `id` = $userId ;";
+
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
+
+        return $this->redirectToRoute('pharmacie_index');
+    }
+
+
+    /**
+     * Deletes a hopitale entity.
+     *
+     * @Route("/deactiver/{id}", name="pharmacie_deactiver")
+     * @Method("GET")
+     */
+    public function deactiverAction(Request $request, Pharmacie $pharmacie)
+    {
+
+        $userId = $pharmacie->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $RAW_QUERY = "UPDATE `user` SET `enabled` = '0' WHERE `id` = $userId ;";
+
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
+
+        return $this->redirectToRoute('pharmacie_index');
+    }
+
 
     /**
      * Creates a form to delete a pharmacie entity.

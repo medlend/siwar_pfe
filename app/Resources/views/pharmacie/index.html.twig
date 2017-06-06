@@ -1,57 +1,146 @@
-{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block body %}#}
+    {#<h1>Pharmacies list</h1>#}
+
+    {#<table>#}
+        {#<thead>#}
+            {#<tr>#}
+                {#<th>Id</th>#}
+                {#<th>Nompharmacie</th>#}
+                {#<th>Mailpharmacie</th>#}
+                {#<th>Telpharmacie</th>#}
+                {#<th>Faxpharmacie</th>#}
+                {#<th>Houverture</th>#}
+                {#<th>Hfermeture</th>#}
+                {#<th>Siteweb</th>#}
+                {#<th>Latitude</th>#}
+                {#<th>Longitude</th>#}
+                {#<th>Type</th>#}
+                {#<th>Actions</th>#}
+            {#</tr>#}
+        {#</thead>#}
+        {#<tbody>#}
+        {#{% for pharmacie in pharmacies %}#}
+            {#<tr>#}
+                {#<td><a href="{{ path('pharmacie_show', { 'id': pharmacie.id }) }}">{{ pharmacie.id }}</a></td>#}
+                {#<td>{{ pharmacie.nomPharmacie }}</td>#}
+                {#<td>{{ pharmacie.mailPharmacie }}</td>#}
+                {#<td>{{ pharmacie.telPharmacie }}</td>#}
+                {#<td>{{ pharmacie.faxPharmacie }}</td>#}
+                {#<td>{{ pharmacie.hOuverture }}</td>#}
+                {#<td>{{ pharmacie.hFermeture }}</td>#}
+                {#<td>{{ pharmacie.siteWeb }}</td>#}
+                {#<td>{{ pharmacie.latitude }}</td>#}
+                {#<td>{{ pharmacie.longitude }}</td>#}
+                {#<td>{{ pharmacie.type }}</td>#}
+                {#<td>#}
+                    {#<ul>#}
+                        {#<li>#}
+                            {#<a href="{{ path('pharmacie_show', { 'id': pharmacie.id }) }}">show</a>#}
+                        {#</li>#}
+                        {#<li>#}
+                            {#<a href="{{ path('pharmacie_edit', { 'id': pharmacie.id }) }}">edit</a>#}
+                        {#</li>#}
+                    {#</ul>#}
+                {#</td>#}
+            {#</tr>#}
+        {#{% endfor %}#}
+        {#</tbody>#}
+    {#</table>#}
+
+    {#<ul>#}
+        {#<li>#}
+            {#<a href="{{ path('pharmacie_new') }}">Create a new pharmacie</a>#}
+        {#</li>#}
+    {#</ul>#}
+{#{% endblock %}#}
+
+
+
+
+{% extends 'baseAdmin.html.twig' %}
 
 {% block body %}
-    <h1>Pharmacies list</h1>
+    <div id="page-wrapper">
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nompharmacie</th>
-                <th>Mailpharmacie</th>
-                <th>Telpharmacie</th>
-                <th>Faxpharmacie</th>
-                <th>Houverture</th>
-                <th>Hfermeture</th>
-                <th>Siteweb</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Type</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for pharmacie in pharmacies %}
-            <tr>
-                <td><a href="{{ path('pharmacie_show', { 'id': pharmacie.id }) }}">{{ pharmacie.id }}</a></td>
-                <td>{{ pharmacie.nomPharmacie }}</td>
-                <td>{{ pharmacie.mailPharmacie }}</td>
-                <td>{{ pharmacie.telPharmacie }}</td>
-                <td>{{ pharmacie.faxPharmacie }}</td>
-                <td>{{ pharmacie.hOuverture }}</td>
-                <td>{{ pharmacie.hFermeture }}</td>
-                <td>{{ pharmacie.siteWeb }}</td>
-                <td>{{ pharmacie.latitude }}</td>
-                <td>{{ pharmacie.longitude }}</td>
-                <td>{{ pharmacie.type }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('pharmacie_show', { 'id': pharmacie.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('pharmacie_edit', { 'id': pharmacie.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="page-header">Pharmacies liste</h4>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('pharmacie_new') }}">Create a new pharmacie</a>
-        </li>
-    </ul>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    {#<div class="panel-heading">#}
+                    {#DataTables Advanced Tables#}
+                    {#</div>#}
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <table width="100%" class="table table-striped table-bordered table-hover"
+                               id="dataTablesHopitales">
+                            <thead>
+                            <tr>
+                                <th>Nom pharmacie</th>
+                                <th>Tel pharmacie</th>
+                                <th>Heure d'ouverture</th>
+                                <th>heure de fermeture</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for pharmacie in pharmacies %}
+                                <tr>
+                                    <td><a href="{{ path('pharmacie_show', { 'id': pharmacie.id }) }}">{{ pharmacie.nomPharmacie }}</a></td>
+                                    <td>{{ pharmacie.telPharmacie }}</td>
+                                    <td>{{ pharmacie.hOuverture }}</td>
+                                    <td>{{ pharmacie.hFermeture }}</td>
+                                    <td>
+                                        {% if pharmacie.user.enabled == 1 %}
+                                            <a class="btn btn-outline btn-info"  href="{{ path('pharmacie_deactiver', { 'id': pharmacie.id  }) }}">désactiver</a>
+                                        {% elseif pharmacie.user.enabled == 0 %}
+                                            <a class="btn btn-outline btn-warning"  href="{{ path('pharmacie_activer', { 'id': pharmacie.id  }) }}">activer</a>
+                                        {% endif %}
+                                        <a class="btn btn-outline btn-danger"  href="{{ path('pharmacie_delete', { 'id': pharmacie.id  }) }}">supp</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        {#<div class="row">#}
+
+        {#<ul>#}
+        {#<li>#}
+        {#<a class="btn btn-primary btn-lg btn-block" href="{{ path('hopitale_new') }}">Create a new hopitale</a>#}
+        {#</li>#}
+        {#</ul>#}
+        {#</div>#}
+        <!-- /.row -->
+        <!-- /.container-fluid -->
+    </div>
+
+
+
+    <script>
+
+        $(document).ready(function(){
+            $('#dataTablesHopitales').DataTable();
+        });
+    </script>
+
 {% endblock %}

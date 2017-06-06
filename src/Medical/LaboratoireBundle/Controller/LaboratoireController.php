@@ -110,22 +110,64 @@ class LaboratoireController extends Controller
     /**
      * Deletes a laboratoire entity.
      *
-     * @Route("/{id}", name="laboratoire_delete")
-     * @Method("DELETE")
+     * @Route("/laboratoire/{id}", name="laboratoire_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, Laboratoire $laboratoire)
     {
-        $form = $this->createDeleteForm($laboratoire);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($laboratoire);
             $em->flush($laboratoire);
-        }
+
 
         return $this->redirectToRoute('laboratoire_index');
     }
+
+
+    /**
+     * Deletes a hopitale entity.
+     *
+     * @Route("/activer/{id}", name="laboratoire_activer")
+     * @Method("GET")
+     */
+    public function activerAction(Request $request, Laboratoire $laboratoire)
+    {
+
+        $userId = $laboratoire->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $RAW_QUERY = "UPDATE `user` SET `enabled` = '1' WHERE `id` = $userId ;";
+
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
+
+        return $this->redirectToRoute('laboratoire_index');
+    }
+
+
+    /**
+     * Deletes a hopitale entity.
+     *
+     * @Route("/deactiver/{id}", name="laboratoire_deactiver")
+     * @Method("GET")
+     */
+    public function deactiverAction(Request $request, Laboratoire $laboratoire)
+    {
+
+        $userId = $laboratoire->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $RAW_QUERY = "UPDATE `user` SET `enabled` = '0' WHERE `id` = $userId ;";
+
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
+
+        return $this->redirectToRoute('laboratoire_index');
+    }
+
 
     /**
      * Creates a form to delete a laboratoire entity.

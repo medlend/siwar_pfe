@@ -1,55 +1,86 @@
-{% extends 'base.html.twig' %}
+
+{% extends 'baseAdmin.html.twig' %}
 
 {% block body %}
-    <h1>Laboratoires list</h1>
+    <div id="page-wrapper">
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nomlab</th>
-                <th>Maillab</th>
-                <th>Tellab</th>
-                <th>Faxlab</th>
-                <th>Houverture</th>
-                <th>Hfermeture</th>
-                <th>Siteweb</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for laboratoire in laboratoires %}
-            <tr>
-                <td><a href="{{ path('laboratoire_show', { 'id': laboratoire.id }) }}">{{ laboratoire.id }}</a></td>
-                <td>{{ laboratoire.nomLab }}</td>
-                <td>{{ laboratoire.mailLab }}</td>
-                <td>{{ laboratoire.telLab }}</td>
-                <td>{{ laboratoire.faxLab }}</td>
-                <td>{{ laboratoire.hOuverture }}</td>
-                <td>{{ laboratoire.hFermeture }}</td>
-                <td>{{ laboratoire.siteWeb }}</td>
-                <td>{{ laboratoire.latitude }}</td>
-                <td>{{ laboratoire.longitude }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('laboratoire_show', { 'id': laboratoire.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('laboratoire_edit', { 'id': laboratoire.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="page-header">Hopitales liste</h4>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('laboratoire_new') }}">Create a new laboratoire</a>
-        </li>
-    </ul>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    {#<div class="panel-heading">#}
+                    {#DataTables Advanced Tables#}
+                    {#</div>#}
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <table width="100%" class="table table-striped table-bordered table-hover"
+                               id="dataTablesHopitales">
+                            <thead>
+                            <tr>
+                                <th>Nom laboratoire</th>
+                                <th>Tel laboratoire</th>
+                                <th>Heure d'ouverture</th>
+                                <th>heure de fermeture</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for laboratoire in laboratoires %}
+                                <tr>
+                                    <td><a href="{{ path('laboratoire_show', { 'id': laboratoire.id }) }}">{{ laboratoire.nomLab  }}</a></td>
+                                    <td>{{ laboratoire.telLab  }}</td>
+                                    <td>{{ laboratoire.hOuverture }}</td>
+                                    <td>{{ laboratoire.hFermeture }}</td>
+                                    <td>
+                                        {% if laboratoire.user.enabled == 1 %}
+                                            <a class="btn btn-outline btn-info"  href="{{ path('laboratoire_deactiver', { 'id': laboratoire.id  }) }}">désactiver</a>
+                                        {% elseif laboratoire.user.enabled == 0 %}
+                                            <a class="btn btn-outline btn-warning"  href="{{ path('laboratoire_activer', { 'id': laboratoire.id  }) }}">activer</a>
+                                        {% endif %}
+                                        <a class="btn btn-outline btn-danger"  href="{{ path('laboratoire_delete', { 'id': laboratoire.id  }) }}">supp</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        {#<div class="row">#}
+
+        {#<ul>#}
+        {#<li>#}
+        {#<a class="btn btn-primary btn-lg btn-block" href="{{ path('hopitale_new') }}">Create a new hopitale</a>#}
+        {#</li>#}
+        {#</ul>#}
+        {#</div>#}
+        <!-- /.row -->
+        <!-- /.container-fluid -->
+    </div>
+
+
+
+    <script>
+
+        $(document).ready(function(){
+            $('#dataTablesHopitales').DataTable();
+        });
+    </script>
+
 {% endblock %}
