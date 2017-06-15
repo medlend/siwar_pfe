@@ -28,6 +28,7 @@ class MedecinType extends AbstractType
             ->add('adresse')
             ->add('specialite')
             ->add('image', FileType::class, array('label' => 'Profile image'))
+            ->add('image2', FileType::class, array('label' => 'Image de diplôme'))
         ;
     }
     

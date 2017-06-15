@@ -1,0 +1,56 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    {#<h1>Specialite creation</h1>#}
+
+    {#{{ form_start(form) }}#}
+        {#{{ form_widget(form) }}#}
+        {#<input type="submit" value="Create" />#}
+    {#{{ form_end(form) }}#}
+
+    {#<ul>#}
+        {#<li>#}
+            {#<a href="{{ path('specialite_index') }}">Back to the list</a>#}
+        {#</li>#}
+    {#</ul>#}
+
+
+
+
+
+    <div id="page-wrapper">
+    <div class="panel panel-primary" >
+        <div class="panel-heading">
+            <h3 class="panel-title">Registration Spécialité</h3>
+        </div>
+        <div class="panel-body" >
+
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.nomSpecialite, "Nom Spécialité") }}
+                    {{ form_widget(form.nomSpecialite, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                    {{ form_label(form.image, "Image") }}
+                    {{ form_widget(form.image, {'attr': {'class': 'form-control input-sm"'}}) }}
+                </div>
+
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group  pull-right" >
+                    <input type="submit" class="btn btn-primary" value="Submit"/>
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+    </div>
+
+
+{% endblock %}

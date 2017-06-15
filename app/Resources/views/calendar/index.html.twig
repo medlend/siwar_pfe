@@ -1,5 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll"  href="{{ path('medecin_show', { 'id': medecin.id }) }}">Profile</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{{ path('medecin_calendar', { 'id': medecin.id }) }}">Rendez-vous</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{{ path('medecin_contact', { 'id': medecin.id }) }}">contacter l'administrateur</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
     {% include '@FullCalendar/Calendar/calendar.html.twig' %}
 {% endblock %}

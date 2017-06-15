@@ -20,24 +20,30 @@ class CalendarEvent
 
     /**
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $idDocteur;
 
     /**
+     *
+     * @ORM\Column(type="string", length=248, nullable=true)
+     */
+    private $idUser;
+
+    /**
      * @var string
-     * @ORM\Column(type="string", length=248)
+     * @ORM\Column(type="string", length=248, nullable=true)
      */
     private $title;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
      */
     private $startDate;
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
      */
     private $endDate;
 
@@ -58,6 +64,26 @@ class CalendarEvent
         $this->id = $id;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIdUser()
+    {
+        return $this->idUser;
+    }
+
+    /**
+     * @param mixed $idUser
+     * @return CalendarEvent
+     */
+    public function setIdUser($idUser)
+    {
+        $this->idUser = $idUser;
+        return $this;
+    }
+
+
 
     /**
      * @return mixed
@@ -98,7 +124,7 @@ class CalendarEvent
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getStartDate()
     {
@@ -106,7 +132,7 @@ class CalendarEvent
     }
 
     /**
-     * @param \DateTime $startDate
+     * @param string $startDate
      * @return CalendarEvent
      */
     public function setStartDate($startDate)
@@ -116,7 +142,7 @@ class CalendarEvent
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getEndDate()
     {
@@ -124,7 +150,7 @@ class CalendarEvent
     }
 
     /**
-     * @param \DateTime $endDate
+     * @param string $endDate
      * @return CalendarEvent
      */
     public function setEndDate($endDate)

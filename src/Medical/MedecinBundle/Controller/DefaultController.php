@@ -2,10 +2,12 @@
 
 namespace Medical\MedecinBundle\Controller;
 
+use Medical\MedecinBundle\Entity\CalendarEvent;
 use Medical\MedecinBundle\Entity\Medecin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -190,16 +192,59 @@ class DefaultController extends Controller
      */
     public function postMedicalInscriptionAction()
     {
-        die('aaa');
+        $email = $_POST["email_user"];
+        $nom = $_POST["nom_user"];
+//        $sexe = $_POST["sex_user"];
+        $password = $_POST["password_user"];
+
+        $response = array();
+        $userManager = $this->get('fos_user.user_manager');
+        $email_exist = $userManager->findUserByEmail($email);
+        if ($email_exist) {
+            $code = "échec d'inscription";
+            $message = "Utilisateur Déjà existant";
+            array_push($response, array("code" => $code, "message" => $message));
+
+            return new JsonResponse($response);
+        }
+
+        $user = $userManager->createUser();
+        $user->setUsername($nom);
+        $user->setEmail($email);
+        $user->setEmailCanonical($email);
+        $user->setEnabled(true);
+        // this method will encrypt the password with the default settings :)
+        $user->setPlainPassword($password);
+
+        $userManager->updateUser($user);
+
+        $code = "Enregistrement réussi";
+        $message = "Merci de vous être inscrit";
+        array_push($response, array("code" => $code, "message" => $message));
+        return new JsonResponse($response);
 
     }
 
     /**
      * @Route("/medical/connextion", name="api_medical_connextion")
      */
-    public function postMedicalConnextionAction()
+    public function postMedicalConnextionAction(Request $request)
     {
-        die('bbbb');
+
+        $email = $_POST["email_user"];
+        $password = $_POST["password_user"];
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByEmail($email);
+        if (is_null($user))
+            return new JsonResponse("Échec de la connexion");
+
+        $isValid = $this->get('security.password_encoder')
+            ->isPasswordValid($user, $password);
+
+        if (!$isValid)
+            return new JsonResponse("Échec de la connexion");
+
+        return new JsonResponse("Succes");
 
     }
 
@@ -208,7 +253,22 @@ class DefaultController extends Controller
      */
     public function postMedicalRendezVousAction()
     {
-        die('cccc');
+        $heure = $_POST["heure_rdv"];
+        $date = $_POST["date_rdv"];
+        $user = $_POST["user"];
+        $doctor = $_POST["docteur"];
+
+        $em = $this->getDoctrine()->getManager();
+        $calendarEvent = new CalendarEvent();
+        $calendarEvent->setStartDate($heure)
+            ->setEndDate($date)
+            ->setIdUser($user)
+            ->setIdDocteur($doctor);
+
+        $em->persist($calendarEvent);
+        $em->flush();
+
+        return new JsonResponse('merci');
 
     }
 

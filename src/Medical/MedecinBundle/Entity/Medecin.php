@@ -93,6 +93,39 @@ class Medecin
     private $image;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255,nullable=true)
+     *
+     * @Assert\Image(
+     *      maxSize="1024k",
+     *      mimeTypes = { "image/png","image/jpeg", "image/jpg", "image/gif" },
+     *      mimeTypesMessage = "Please upload a valid Image"
+     * )
+     */
+    private $image2;
+
+    /**
+     * @return string
+     */
+    public function getImage2()
+    {
+        return $this->image2;
+    }
+
+    /**
+     * @param string $image2
+     * @return Medecin
+     */
+    public function setImage2($image2)
+    {
+        $this->image2 = $image2;
+        return $this;
+    }
+
+
+
+    /**
      * @return mixed
      */
     public function getId()

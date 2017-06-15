@@ -1,0 +1,116 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block body %}#}
+    {#<h1>Specialites list</h1>#}
+
+    {#<table>#}
+        {#<thead>#}
+            {#<tr>#}
+                {#<th>Id</th>#}
+                {#<th>Nomspecialite</th>#}
+                {#<th>Image</th>#}
+                {#<th>Actions</th>#}
+            {#</tr>#}
+        {#</thead>#}
+        {#<tbody>#}
+        {#{% for specialite in specialites %}#}
+            {#<tr>#}
+                {#<td><a href="{{ path('specialite_show', { 'id': specialite.id }) }}">{{ specialite.id }}</a></td>#}
+                {#<td>{{ specialite.nomSpecialite }}</td>#}
+                {#<td>{{ specialite.image }}</td>#}
+                {#<td>#}
+                    {#<ul>#}
+                        {#<li>#}
+                            {#<a href="{{ path('specialite_show', { 'id': specialite.id }) }}">show</a>#}
+                        {#</li>#}
+                        {#<li>#}
+                            {#<a href="{{ path('specialite_edit', { 'id': specialite.id }) }}">edit</a>#}
+                        {#</li>#}
+                    {#</ul>#}
+                {#</td>#}
+            {#</tr>#}
+        {#{% endfor %}#}
+        {#</tbody>#}
+    {#</table>#}
+
+    {#<ul>#}
+        {#<li>#}
+            {#<a href="{{ path('specialite_new') }}">Create a new specialite</a>#}
+        {#</li>#}
+    {#</ul>#}
+{#{% endblock %}#}
+
+
+
+
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <div id="page-wrapper">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="page-header">Specialites liste</h4>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    {#<div class="panel-heading">#}
+                    {#DataTables Advanced Tables#}
+                    {#</div>#}
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <table width="100%" class="table table-striped table-bordered table-hover"
+                               id="dataTablesHopitales">
+                            <thead>
+                            <tr>
+                                <th>Id Specialite</th>
+                                <th>Nom Specialite</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for specialite in specialites %}
+                                <tr>
+                                    {#<td><a href="{{ path('specialite_show', { 'id': specialite.id }) }}">{{ specialite.id }}</a></td>#}
+                                    <td>{{ specialite.id }}</td>
+                                    <td>{{ specialite.nomSpecialite }}</td>
+                                    <td>
+                                        <a class="btn btn-outline btn-danger"  href="{{ path('specialite_delete', { 'id': specialite.id  }) }}">supp</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    <div class="row">
+    <div class="col-md-2 pull-right"></div>
+        <a href="{{ path('specialite_new') }}">Create a new specialite</a>
+    </div>
+        <!-- /.row -->
+
+    </div>
+
+
+
+    <script>
+
+        $(document).ready(function(){
+            $('#dataTablesHopitales').DataTable();
+        });
+    </script>
+
+{% endblock %}

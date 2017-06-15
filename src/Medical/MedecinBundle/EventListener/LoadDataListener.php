@@ -13,9 +13,18 @@ use AncaRebeca\FullCalendarBundle\Model\FullCalendarEvent;
 use AncaRebeca\FullCalendarBundle\Event\CalendarEvent as MyCustomEventt;
 //use Medical\MedecinBundle\Entity\CalendarEvent as MyCustomEvent;
 use AncaRebeca\FullCalendarBundle\Model\Event as MyCustomEvent;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadDataListener
 {
+
+    private $container;
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @param CalendarEvent $calendarEvent
      *
@@ -23,24 +32,38 @@ class LoadDataListener
      */
     public function loadData(MyCustomEventt $calendarEvent)
     {
+       $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
-        $startDate = $calendarEvent->getStart();
-        $endDate = $calendarEvent->getEnd();
-        $filters = $calendarEvent->getFilters();
+        $eventt = $this->container->get('doctrine.orm.entity_manager')->getRepository('MedecinBundle:CalendarEvent')
+            ->findBy(array('idDocteur' =>$user->getId()));
 
-        dump($startDate,$endDate,$filters);
-        //You may want do a custom query to populate the events
+//        dump($eventt);die;
+//        $hopitales = $this->em
+//            ->getRepository('MedecinBundle:CalendarEvent')
+//            ->createQueryBuilder('e')
+//            ->join('e.user', 'r')
+//            ->where('r.enabled = 1')
+//            ->getQuery()
+//            ->getResult();
 
+        if(empty($eventt)) return ;
+        $userManager = $this->container->get('fos_user.user_manager');
+
+
+
+        foreach ($eventt as $event){
 //        $format = 'Y-m-d H:i:s';
-        $dateStrat = \DateTime::createFromFormat('Y-m-d H:i:s', '2017-05-28 21:24:38');
-        $dateEnd = \DateTime::createFromFormat('Y-m-d H:i:s', '2017-05-28 21:29:38');
+        $heureRendezVous = \DateTime::createFromFormat('Y-m-d', $event->getStartDate());
+        $dateRendezVous = \DateTime::createFromFormat('Y-m-d H:i:s', $event->getEndDate());
 
-        $cust =  new MyCustomEvent('Event Title 1', new \DateTime());
-//        $cust->setEndDate($dateEnd);
-//        $cust->setAllDay(false);
+            $dateRendezVous = new \DateTime($event->getEndDate());
+            $user = $userManager->findUserByEmail($event->getIdUser());
+
+//            dump($date);die('aaa');
+        $cust =  new MyCustomEvent($event->getStartDate().' '.$user->getUsername(), $dateRendezVous);
         $calendarEvent->addEvent($cust);
-//        $calendarEvent->addEvent(new MyCustomEvent('Event Title 2', $dateStrat));
-//        $calendarEvent->addEvent(new MyCustomEvent('Event Titlwwe 2', $dateStrat));
+        }
+
     }
 }
 

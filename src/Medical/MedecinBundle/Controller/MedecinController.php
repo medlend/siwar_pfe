@@ -4,6 +4,7 @@ namespace Medical\MedecinBundle\Controller;
 
 use Medical\MedecinBundle\Entity\CalendarEvent;
 use Medical\MedecinBundle\Entity\Medecin;
+use Medical\MedecinBundle\Entity\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -46,16 +47,66 @@ class MedecinController extends Controller
      */
     public function calendarAction(Medecin $medecin)
     {
+        return $this->render('calendar/index.html.twig', array(
+            'medecin' => $medecin
+        ));
+    }
 
-//        dump($medecin);die;
-//        $dispatcher = new EventDispatcher();
-//        $event = new \AncaRebeca\FullCalendarBundle\Event\CalendarEvent( new \DateTime(),new \DateTime(),[]);
-//        $dispatcher->dispatch('fullcalendar.set_data', $event);
-//
-//        dump(new \DateTime());
-//die('aa');
+    /**
+     * Lists all medecin entities.
+     *
+     * @Route("/contact/{id}", name="medecin_contact")
+     * @Method({"GET"})
+     */
+    public function contactAction(Medecin $medecin)
+    {
 
-        return $this->render('calendar/index.html.twig');
+            $messageEntity = $this->get('doctrine.orm.entity_manager')->getRepository(Message::class)->findOneBy(array('idUser' =>$medecin->getId()));
+
+        $text = array();
+        if(!is_null($messageEntity))
+            $text = json_decode($messageEntity->getText(),true);
+
+
+        return $this->render('medecin/contact.html.twig', array(
+            'medecin' => $medecin,
+            'text' => $text
+        ));
+    }
+
+    /**
+     * Lists all medecin entities.
+     *
+     * @Route("/contact/{id}", name="medecin_contact_post")
+     * @Method({"POST"})
+     */
+    public function contactPostAction(Medecin $medecin,Request $request)
+    {
+        $messageEntity = $this->get('doctrine.orm.entity_manager')->getRepository(Message::class)->findOneBy(array('idUser' =>$medecin->getId()));
+
+        $message = $request->request->get('message');
+
+        $text = array();
+
+        dump($messageEntity);
+        if(!empty($messageEntity))
+            $text = json_decode($messageEntity->getText(),true);
+        else
+            $messageEntity = new Message();
+
+        $text[] = $message;
+
+        $messageEntity->setIdUser($medecin->getId())
+            ->setText(json_encode($text));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($messageEntity);
+        $em->flush($messageEntity);
+
+        return $this->render('medecin/contact.html.twig', array(
+            'medecin' => $medecin,
+            'text' => $text
+        ));
     }
 
 
@@ -68,9 +119,6 @@ class MedecinController extends Controller
     public function newAction(Request $request)
     {
         $medecin = new Medecin();
-
-
-
 
         $form = $this->createForm('Medical\MedecinBundle\Form\MedecinType', $medecin);
         $form->handleRequest($request);
@@ -121,6 +169,10 @@ class MedecinController extends Controller
         $img = $medecin->getImage();
         $var= explode('web',$img);
         $medecin->setImage('http://localhost/siwar_pfe/web'.$var[1]);
+
+        $img2 = $medecin->getImage2();
+        $var2= explode('web',$img2);
+        $medecin->setImage2('http://localhost/siwar_pfe/web'.$var2[1]);
 
         return $this->render('medecin/show.html.twig', array(
             'medecin' => $medecin,
