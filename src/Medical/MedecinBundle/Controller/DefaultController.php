@@ -3,7 +3,10 @@
 namespace Medical\MedecinBundle\Controller;
 
 use Medical\MedecinBundle\Entity\CalendarEvent;
+use Medical\MedecinBundle\Entity\Conseil;
 use Medical\MedecinBundle\Entity\Medecin;
+use Medical\MedecinBundle\Entity\Ordonnance;
+use Medical\PharmacieBundle\Entity\Pharmacie;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -173,18 +176,42 @@ class DefaultController extends Controller
             ->getQuery()
             ->getResult();
 
+$data = array();
+        /**
+         * @var $pharmacie Pharmacie
+         */
+        foreach ($pharmacies as $pharmacie){
+            $img = $pharmacie->getImage();
+            $var = explode('web', $img);
+            $pharmacie->setImage('/siwar_pfe/web' . $var[1]);
 
-        $encoders = array(new JsonEncode());
-        $normalizers = array(new ObjectNormalizer());
+            $data[]=['nom'=>$pharmacie->getNomPharmacie(),
+                'image'=>$pharmacie->getImage(),
+                'num_tel'=>$pharmacie->getTelPharmacie(),
+                'fax'=>$pharmacie->getFaxPharmacie(),
+                'site_web'=>$pharmacie->getSiteWeb(),
+                'mail'=>$pharmacie->getUser()->getEmail(),
+                'adresse'=>$pharmacie->getAdresse(),
+                'ouverture'=>$pharmacie->getHOuverture(),
+                'fermeture'=>$pharmacie->getHFermeture(),
+                'type'=>$pharmacie->getType()
+            ];
 
-        $serializer = new Serializer($normalizers, $encoders);
+        }
 
-        $list = array_map(function ($entry) use ($serializer) {
-            $entry->setImage(null);
-            return $serializer->serialize($entry, 'json');
-        }, $pharmacies);
+//        $encoders = array(new JsonEncode());
+//        $normalizers = array(new ObjectNormalizer());
+//
+//        $serializer = new Serializer($normalizers, $encoders);
+//
+//        $list = array_map(function ($entry) use ($serializer) {
+////            $entry->setImage(null);
+//            return $serializer->serialize($entry, 'json');
+//        }, $pharmacies);
+//
+//        dump($pharmacies);die;
 
-        return new JsonResponse($list);
+        return new JsonResponse($data);
     }
 
     /**
@@ -270,6 +297,72 @@ class DefaultController extends Controller
 
         return new JsonResponse('merci');
 
+    }
+
+    /**
+     * @Route("/ordonnance/pharmacie", name="api_medical_rendez_vouz")
+     */
+    public function postOrdonnanceVousAction()
+    {
+        $id_pharmacie = $_POST["id_pharmacie"];
+        $email = $_POST["email_user"];
+        $capture = $_POST["capture"];
+        $message = $_POST["message"];
+
+        $response = array();
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByEmail($email);
+
+        if ($user) {
+            $code = "échec d'inscription";
+            $message = "Utilisateur Déjà existant";
+            array_push($response, array("code" => $code, "message" => $message));
+
+            return new JsonResponse($response);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $ordo = new Ordonnance();
+        $ordo->setIdPhar($id_pharmacie)
+            ->setIdUser($user->getId())
+            ->setTextImage($capture)
+            ->setMessage($message);
+
+        $em->persist($ordo);
+        $em->flush();
+
+        return new JsonResponse('Ordonnace a été envoyer');
+
+    }
+
+
+    /**
+     * @Route("/list/conseil", name="api_conseil_list")
+     */
+    public function getConseilsAction()
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $conseils = $em->getRepository('MedecinBundle:Conseil')->findAll();
+
+        foreach ($conseils as $conseil){
+            $img = $conseil->getImage();
+            $var = explode('web', $img);
+            $conseil->setImage('http://localhost/siwar_pfe/web' . $var[1]);
+        }
+
+        $encoders = array(new JsonEncode());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $list = array_map(function ($entry) use ($serializer) {
+            return $serializer->serialize($entry, 'json');
+        }, $conseils);
+//dump($conseils);
+        return new JsonResponse($list);
     }
 
 

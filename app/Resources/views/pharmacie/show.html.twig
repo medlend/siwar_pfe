@@ -1,70 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {#<h1>Pharmacie</h1>#}
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
 
-    {#<table>#}
-        {#<tbody>#}
-            {#<tr>#}
-                {#<th>Id</th>#}
-                {#<td>{{ pharmacie.id }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Nompharmacie</th>#}
-                {#<td>{{ pharmacie.nomPharmacie }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Mailpharmacie</th>#}
-                {#<td>{{ pharmacie.mailPharmacie }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Telpharmacie</th>#}
-                {#<td>{{ pharmacie.telPharmacie }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Faxpharmacie</th>#}
-                {#<td>{{ pharmacie.faxPharmacie }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Houverture</th>#}
-                {#<td>{{ pharmacie.hOuverture }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Hfermeture</th>#}
-                {#<td>{{ pharmacie.hFermeture }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Siteweb</th>#}
-                {#<td>{{ pharmacie.siteWeb }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Latitude</th>#}
-                {#<td>{{ pharmacie.latitude }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Longitude</th>#}
-                {#<td>{{ pharmacie.longitude }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Type</th>#}
-                {#<td>{{ pharmacie.type }}</td>#}
-            {#</tr>#}
-        {#</tbody>#}
-    {#</table>#}
-
-    {#<ul>#}
-        {#<li>#}
-            {#<a href="{{ path('pharmacie_index') }}">Back to the list</a>#}
-        {#</li>#}
-        {#<li>#}
-            {#<a href="{{ path('pharmacie_edit', { 'id': pharmacie.id }) }}">Edit</a>#}
-        {#</li>#}
-        {#<li>#}
-            {#{{ form_start(delete_form) }}#}
-                {#<input type="submit" value="Delete">#}
-            {#{{ form_end(delete_form) }}#}
-        {#</li>#}
-    {#</ul>#}
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll"  href="{{ path('pharmacie_show', { 'id': pharmacie.id }) }}">Profile</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{{ path('pharmacie_contact', { 'id': pharmacie.id }) }}">contacter l'administrateur</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
 
 

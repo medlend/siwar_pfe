@@ -3,6 +3,7 @@
 namespace Medical\HopitaleBundle\Controller;
 
 use Medical\HopitaleBundle\Entity\Hopitale;
+use Medical\MedecinBundle\Entity\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -183,4 +184,67 @@ class HopitaleController extends Controller
             ->setMethod('DELETE')
             ->getForm();
     }
+
+
+    /**
+     * Lists all medecin entities.
+     *
+     * @Route("/contact/{id}", name="hopitale_contact")
+     * @Method({"GET"})
+     */
+    public function contactAction(Hopitale $medecin)
+    {
+
+        $messageEntity = $this->get('doctrine.orm.entity_manager')->getRepository(Message::class)->findOneBy(array('idUser' => $medecin->getUser()->getId()));
+
+        $text = array();
+        if (!is_null($messageEntity))
+            $text = json_decode($messageEntity->getText(), true);
+
+//dump($text);die;
+        return $this->render('hopitale/contact.html.twig', array(
+            'medecin' => $medecin,
+            'text' => $text
+        ));
+    }
+
+    /**
+     * Lists all medecin entities.
+     *
+     * @Route("/contact/{id}", name="hopitale_contact_post")
+     * @Method({"POST"})
+     */
+    public function contactPostAction(Hopitale $medecin, Request $request)
+    {
+        $idUser = $medecin->getUser()->getId();
+        $messageEntity = $this->get('doctrine.orm.entity_manager')->getRepository(Message::class)->findOneBy(array('idUser' => $medecin->getUser()->getId()));
+
+        $message = $request->request->get('message');
+
+        $text = array();
+
+        if (!empty($messageEntity))
+            $text = json_decode($messageEntity->getText(), true);
+
+
+        $text[] = ["moi", $message];
+
+        $jsonText = json_encode($text);
+
+        $query = "INSERT INTO message (text,id_user) VALUES ('$jsonText', $idUser) ON DUPLICATE KEY UPDATE text = '$jsonText';";
+
+        $em = $this->getDoctrine()->getManager();
+
+        $statement = $em->getConnection()->prepare($query);
+        $statement->execute();
+
+
+        return $this->render('hopitale/contact.html.twig', array(
+            'medecin' => $medecin,
+            'text' => $text
+        ));
+    }
+
+
+
 }

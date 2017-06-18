@@ -1,69 +1,30 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {#<h1>Laboratoire</h1>#}
-
-    {#<table>#}
-        {#<tbody>#}
-            {#<tr>#}
-                {#<th>Id</th>#}
-                {#<td>{{ laboratoire.id }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Nomlab</th>#}
-                {#<td>{{ laboratoire.nomLab }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Maillab</th>#}
-                {#<td>{{ laboratoire.mailLab }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Tellab</th>#}
-                {#<td>{{ laboratoire.telLab }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Faxlab</th>#}
-                {#<td>{{ laboratoire.faxLab }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Houverture</th>#}
-                {#<td>{{ laboratoire.hOuverture }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Hfermeture</th>#}
-                {#<td>{{ laboratoire.hFermeture }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Siteweb</th>#}
-                {#<td>{{ laboratoire.siteWeb }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Latitude</th>#}
-                {#<td>{{ laboratoire.latitude }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Longitude</th>#}
-                {#<td>{{ laboratoire.longitude }}</td>#}
-            {#</tr>#}
-        {#</tbody>#}
-    {#</table>#}
-
-    {#<ul>#}
-        {#<li>#}
-            {#<a href="{{ path('laboratoire_index') }}">Back to the list</a>#}
-        {#</li>#}
-        {#<li>#}
-            {#<a href="{{ path('laboratoire_edit', { 'id': laboratoire.id }) }}">Edit</a>#}
-        {#</li>#}
-        {#<li>#}
-            {#{{ form_start(delete_form) }}#}
-                {#<input type="submit" value="Delete">#}
-            {#{{ form_end(delete_form) }}#}
-        {#</li>#}
-    {#</ul>#}
 
 
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
 
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll"  href="{{ path('laboratoire_show', { 'id': laboratoire.id }) }}">Profile</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{{ path('laboratoire_contact', { 'id': laboratoire.id }) }}">contacter l'administrateur</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
 
 
@@ -115,11 +76,11 @@
             </div>
 
 
-            <div class="row  " style="margin-top: 5%;padding-bottom: 5%">
-                <div class="col-lg-3 pull-right" style="margin-left: 5%">
-                    <a class="btn btn-primary" href="{{ path('laboratoire_edit', { 'id': laboratoire.id }) }}">Edit</a>
-                </div>
-            </div>
+            {#<div class="row  " style="margin-top: 5%;padding-bottom: 5%">#}
+                {#<div class="col-lg-3 pull-right" style="margin-left: 5%">#}
+                    {#<a class="btn btn-primary" href="{{ path('laboratoire_edit', { 'id': laboratoire.id }) }}">Edit</a>#}
+                {#</div>#}
+            {#</div>#}
 
         </div>
 

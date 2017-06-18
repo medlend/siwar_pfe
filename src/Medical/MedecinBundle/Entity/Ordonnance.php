@@ -13,9 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="message")
+ * @ORM\Table(name="ordonnance")
  */
-class Message
+class Ordonnance
 {
     /**
      * @ORM\Id
@@ -27,12 +27,42 @@ class Message
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $text;
+    private $textImage;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $message;
+
 
     /**
      * @ORM\Column(type="integer",  nullable=true, unique=true)
      */
     private $idUser;
+
+    /**
+     * @ORM\Column(type="integer",  nullable=true, unique=true)
+     */
+    private $idPhar;
+
+    /**
+     * @return mixed
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param mixed $message
+     * @return Ordonnance
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+        return $this;
+    }
+
 
     /**
      * @return mixed
@@ -44,7 +74,7 @@ class Message
 
     /**
      * @param mixed $id
-     * @return Message
+     * @return Ordonnance
      */
     public function setId($id)
     {
@@ -55,18 +85,18 @@ class Message
     /**
      * @return mixed
      */
-    public function getText()
+    public function getTextImage()
     {
-        return $this->text;
+        return $this->textImage;
     }
 
     /**
-     * @param mixed $text
-     * @return Message
+     * @param mixed $textImage
+     * @return Ordonnance
      */
-    public function setText($text)
+    public function setTextImage($textImage)
     {
-        $this->text = $text;
+        $this->textImage = $textImage;
         return $this;
     }
 
@@ -80,7 +110,7 @@ class Message
 
     /**
      * @param mixed $idUser
-     * @return Message
+     * @return Ordonnance
      */
     public function setIdUser($idUser)
     {
@@ -88,7 +118,23 @@ class Message
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getIdPhar()
+    {
+        return $this->idPhar;
+    }
 
+    /**
+     * @param mixed $idPhar
+     * @return Ordonnance
+     */
+    public function setIdPhar($idPhar)
+    {
+        $this->idPhar = $idPhar;
+        return $this;
+    }
 
 
 }

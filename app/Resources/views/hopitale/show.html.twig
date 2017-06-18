@@ -2,6 +2,32 @@
 
 {% block body %}
 
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll"  href="{{ path('hopitale_show', { 'id': hopitale.id }) }}">Profile</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{{ path('hopitale_contact', { 'id': hopitale.id }) }}">contacter l'administrateur</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+
+
     <div class="container" style="margin-top: 10%">
 
 

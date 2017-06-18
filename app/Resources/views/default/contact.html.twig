@@ -1,0 +1,69 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+
+
+    <style>
+
+        .message-bubble {
+            padding: 10px 0px 10px 0px;
+        }
+
+        .message-bubble:nth-child(even) {
+            background-color: #ddd;
+        }
+
+        .message-bubble > * {
+            padding-left: 10px;
+        }
+
+        .panel-body {
+            padding: 0px;
+        }
+
+        .panel-heading {
+            background-color: #3d6da7 !important;
+            color: white !important;
+        }
+
+    </style>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+
+            {#<div class="container">#}
+                <div class="row" style="margin-top: 100px">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Messages</div>
+                        <div class="panel-body">
+                            <div class="container">
+
+                                {% for value in text %}
+                                    <div class="row message-bubble">
+                                        <p class="text-muted">{{ value[0] == 'moi' ? user.username : value[0] }}</p>
+                                        <span>{{ value[1] }}</span>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+                            <form action="{{ path("admin_contact_post", { 'id': user.id }) }}" method="post">
+                                <div class="panel-footer">
+                                    <div class="input-group">
+                                        <input type="text" name="message" class="form-control">
+                                        <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Send</button>
+                  </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        {#</div>#}
+    </div>
+
+
+
+{% endblock %}

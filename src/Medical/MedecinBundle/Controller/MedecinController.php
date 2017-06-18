@@ -38,7 +38,6 @@ class MedecinController extends Controller
     }
 
 
-
     /**
      * Lists all medecin entities.
      *
@@ -61,13 +60,13 @@ class MedecinController extends Controller
     public function contactAction(Medecin $medecin)
     {
 
-            $messageEntity = $this->get('doctrine.orm.entity_manager')->getRepository(Message::class)->findOneBy(array('idUser' =>$medecin->getId()));
+        $messageEntity = $this->get('doctrine.orm.entity_manager')->getRepository(Message::class)->findOneBy(array('idUser' => $medecin->getUser()->getId()));
 
         $text = array();
-        if(!is_null($messageEntity))
-            $text = json_decode($messageEntity->getText(),true);
+        if (!is_null($messageEntity))
+            $text = json_decode($messageEntity->getText(), true);
 
-
+//dump($text);die;
         return $this->render('medecin/contact.html.twig', array(
             'medecin' => $medecin,
             'text' => $text
@@ -80,28 +79,30 @@ class MedecinController extends Controller
      * @Route("/contact/{id}", name="medecin_contact_post")
      * @Method({"POST"})
      */
-    public function contactPostAction(Medecin $medecin,Request $request)
+    public function contactPostAction(Medecin $medecin, Request $request)
     {
-        $messageEntity = $this->get('doctrine.orm.entity_manager')->getRepository(Message::class)->findOneBy(array('idUser' =>$medecin->getId()));
+        $idUser = $medecin->getUser()->getId();
+        $messageEntity = $this->get('doctrine.orm.entity_manager')->getRepository(Message::class)->findOneBy(array('idUser' => $medecin->getUser()->getId()));
 
         $message = $request->request->get('message');
 
         $text = array();
 
-        dump($messageEntity);
-        if(!empty($messageEntity))
-            $text = json_decode($messageEntity->getText(),true);
-        else
-            $messageEntity = new Message();
+        if (!empty($messageEntity))
+            $text = json_decode($messageEntity->getText(), true);
 
-        $text[] = $message;
 
-        $messageEntity->setIdUser($medecin->getId())
-            ->setText(json_encode($text));
+        $text[] = ["moi", $message];
+
+        $jsonText = json_encode($text);
+
+        $query = "INSERT INTO message (text,id_user) VALUES ('$jsonText', $idUser) ON DUPLICATE KEY UPDATE text = '$jsonText';";
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($messageEntity);
-        $em->flush($messageEntity);
+
+        $statement = $em->getConnection()->prepare($query);
+        $statement->execute();
+
 
         return $this->render('medecin/contact.html.twig', array(
             'medecin' => $medecin,
@@ -167,12 +168,12 @@ class MedecinController extends Controller
         $deleteForm = $this->createDeleteForm($medecin);
 
         $img = $medecin->getImage();
-        $var= explode('web',$img);
-        $medecin->setImage('http://localhost/siwar_pfe/web'.$var[1]);
+        $var = explode('web', $img);
+        $medecin->setImage('http://localhost/siwar_pfe/web' . $var[1]);
 
         $img2 = $medecin->getImage2();
-        $var2= explode('web',$img2);
-        $medecin->setImage2('http://localhost/siwar_pfe/web'.$var2[1]);
+        $var2 = explode('web', $img2);
+        $medecin->setImage2('http://localhost/siwar_pfe/web' . $var2[1]);
 
         return $this->render('medecin/show.html.twig', array(
             'medecin' => $medecin,
@@ -214,9 +215,9 @@ class MedecinController extends Controller
     public function deleteAction(Request $request, Medecin $medecin)
     {
 
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($medecin);
-            $em->flush($medecin);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($medecin);
+        $em->flush($medecin);
         return $this->redirectToRoute('medecin_index');
     }
 
@@ -262,10 +263,6 @@ class MedecinController extends Controller
 
         return $this->redirectToRoute('medecin_index');
     }
-
-
-
-
 
 
     /**

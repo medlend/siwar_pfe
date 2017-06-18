@@ -13,13 +13,10 @@
                         <a class="page-scroll" href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll"  href="{{ path('medecin_show', { 'id': medecin.id }) }}">Profile</a>
+                        <a class="page-scroll"  href="{{ path('laboratoire_show', { 'id': medecin.id }) }}">Profile</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="{{ path('medecin_calendar', { 'id': medecin.id }) }}">Rendez-vous</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="{{ path('medecin_contact', { 'id': medecin.id }) }}">contacter l'administrateur</a>
+                        <a class="page-scroll" href="{{ path('laboratoire_contact', { 'id': medecin.id }) }}">contacter l'administrateur</a>
                     </li>
                 </ul>
             </div>
@@ -64,7 +61,7 @@
                         {% endfor %}
 
                     </div>
-                    <form action="{{ path("medecin_contact_post", { 'id': medecin.id }) }}" method="post">
+                    <form action="{{ path("laboratoire_contact_post", { 'id': medecin.id }) }}" method="post">
                     <div class="panel-footer">
                         <div class="input-group">
                             <input type="text" name="message" class="form-control">

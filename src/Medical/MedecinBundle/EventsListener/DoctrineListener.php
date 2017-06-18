@@ -10,6 +10,7 @@ namespace Medical\MedecinBundle\EventsListener;
 
 use Medical\HopitaleBundle\Entity\Hopitale;
 use Medical\LaboratoireBundle\Entity\Laboratoire;
+use Medical\MedecinBundle\Entity\Conseil;
 use Medical\MedecinBundle\Entity\Medecin;
 use Medical\MedecinBundle\Entity\Specialite;
 use Medical\MedecinBundle\Services\FileUploader;
@@ -63,7 +64,7 @@ class DoctrineListener
 
         $entity = $args->getEntity();
 //dump($entity);
-        if (!$entity instanceof Medecin && !$entity instanceof Hopitale && !$entity instanceof Laboratoire && !$entity instanceof Pharmacie && !$entity instanceof Specialite) {
+        if (!$entity instanceof Medecin && !$entity instanceof Hopitale && !$entity instanceof Laboratoire && !$entity instanceof Pharmacie && !$entity instanceof Specialite && !$entity instanceof Conseil) {
             return;
         }
 
@@ -92,7 +93,7 @@ class DoctrineListener
     private function uploadFile($entity)
     {
         // upload only works for Product entities
-        if (!$entity instanceof Medecin && !$entity instanceof Hopitale && !$entity instanceof Laboratoire && !$entity instanceof Pharmacie && !$entity instanceof Specialite) {
+        if (!$entity instanceof Medecin && !$entity instanceof Hopitale && !$entity instanceof Laboratoire && !$entity instanceof Pharmacie && !$entity instanceof Specialite && !$entity instanceof Conseil ) {
             return;
         }
 
